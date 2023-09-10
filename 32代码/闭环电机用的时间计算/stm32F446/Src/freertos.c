@@ -145,6 +145,8 @@ void StartDefaultTask(void const * argument)
   /* Infinite loop */
   for(;;)
   {
+		//vision_send_2();
+		//screen_return_movie();
     osDelay(2);
   }
   /* USER CODE END StartDefaultTask */
@@ -170,6 +172,9 @@ void vision_tesk(void const * argument)
 }
 
 /* USER CODE BEGIN Header_screen_tesk */
+uint32_t vision_send_sign_1=0,vision_2_sign_1=0,vision_1_sign_1=0;
+uint8_t vision_last_sign=0;
+extern uint8_t up_motor_move_flag;
 /**
 * @brief Function implementing the screen thread.
 * @param argument: Not used
@@ -182,6 +187,20 @@ void screen_tesk(void const * argument)
   /* Infinite loop */
   for(;;)
   {
+		if(vision_send_sign_1==2) vision_2_sign_1++;
+		if(vision_2_sign_1==1)
+		{
+			vision_1_sign_1=0;
+			vision_send_2();
+		}
+		
+		if(vision_send_sign_1==1) vision_1_sign_1++;
+		if(vision_1_sign_1==1)
+		{
+			vision_send_1();
+			vision_2_sign_1=0;
+		}
+		
     screen_display_task();
     osDelay(2);
   }
@@ -253,33 +272,6 @@ void motor_control_tesk(void const * argument)
       push_rod_motor_stop();
       //HAL_GPIO_WritePin(GPIOB,GPIO_PIN_8,GPIO_PIN_SET);
     }
-    /*
-    if(cnt1==200)
-    {
-      ZDT_X57_Bypass_Position_LV_Control(1,1,100, 900, 0, 0);
-      cnt1=0;
-    }
-    
-    if(cnt3==1)
-    {
-      Tim_3_ch2_motor.Pulse++;
-      Tim_3_ch2_motor.Actual_angle =Tim_3_ch2_motor.Pulse* 360.0 /3200.0;
-      if(Tim_3_ch2_motor.direction==0) HAL_GPIO_WritePin(GPIOB,GPIO_PIN_12,GPIO_PIN_RESET);
-      else if(Tim_3_ch2_motor.direction==1) HAL_GPIO_WritePin(GPIOB,GPIO_PIN_12,GPIO_PIN_SET);
-      if(Tim_3_ch2_motor.Actual_angle <= Tim_3_ch2_motor.Target_angle)
-      {
-        __HAL_TIM_SetCompare(&htim3, TIM_CHANNEL_4, 500);
-      }
-      else
-      {
-        __HAL_TIM_SetCompare(&htim3, TIM_CHANNEL_4, 0);
-        Tim_3_ch2_motor.Target_angle=0;
-        Tim_3_ch2_motor.Actual_angle=0;
-        Tim_3_ch2_motor.Pulse=0;
-        cnt3=0;
-      }
-    }
-    */
     osDelay(2);
   }
   /* USER CODE END motor_control_tesk */

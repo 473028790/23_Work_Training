@@ -26,4 +26,30 @@ void vision_uart_deal(void)
         vision_usart_flag=0;
     }
 }
+static void vision_SendData(uint8_t data1)
+{	
+    uint8_t tail  =0x80;
+    uint8_t End =0x7E;
+    static uint8_t screen_data;
 
+    screen_data=data1;
+
+
+    HAL_UART_Transmit(&huart2,(uint8_t *)&tail,1,0x10);
+    HAL_UART_Transmit(&huart2,(uint8_t *)&screen_data,sizeof(screen_data),0x10);
+    HAL_UART_Transmit(&huart2,(uint8_t *)&End,1,0x10);
+};
+int cnt62=0;
+void vision_send_1(void)
+{
+	cnt62++;
+	static uint8_t vision_stop=1;
+	HAL_UART_Transmit(&huart2,(uint8_t *)&vision_stop,sizeof(vision_stop),0x10);
+}
+int cnt=0;
+void vision_send_2(void)
+{
+	cnt++;
+	static uint8_t vision_stop=2;
+	HAL_UART_Transmit(&huart2,(uint8_t *)&vision_stop,sizeof(vision_stop),0x10);
+}

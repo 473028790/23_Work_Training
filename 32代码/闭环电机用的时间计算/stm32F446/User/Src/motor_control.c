@@ -63,7 +63,7 @@ void rotateToPosition(int currentPos, int targetPos)
 		//ZDT_X57_Bypass_Position_LV_Control(1,1,200.0f,900.0f*clockwiseSteps,0,0);
 		if(clockwiseSteps!=0)
 		{
-			ZDT_X57_Bypass_Position_LV_Control(1,1,100.0f,900.0f*clockwiseSteps,0,0);
+			ZDT_X57_Bypass_Position_LV_Control(1,1,300.0f,900.0f*clockwiseSteps,0,0);
 		}
         // 在这里执行实际的旋转操作
     } else {
@@ -71,23 +71,27 @@ void rotateToPosition(int currentPos, int targetPos)
 		//ZDT_X57_Bypass_Position_LV_Control(1,0,200.0f,900.0f*counterClockwiseSteps,0,0);
 		if(clockwiseSteps!=0)
 		{
-			ZDT_X57_Bypass_Position_LV_Control(1,0,100.0f,900.0f*counterClockwiseSteps,0,0);
+			ZDT_X57_Bypass_Position_LV_Control(1,0,300.0f,900.0f*counterClockwiseSteps,0,0);
 		}
         // 在这里执行实际的旋转操作
     }
 }
+extern uint8_t vision_send_sign_1;
+int cnt262=0,cnt26=0;
 void UP_motor_move(void)
 {
 	if(up_motor_move_flag==1)
     {
 		Garbage_inlet_motor.direction=1;
 		Garbage_inlet_motor.Pulse++;
-		Garbage_inlet_motor.Target_angle=600;
+		Garbage_inlet_motor.Target_angle=300;
 		if(Garbage_inlet_motor.direction==1) HAL_GPIO_WritePin(GPIOB,GPIO_PIN_12,GPIO_PIN_RESET);
 		if(Garbage_inlet_motor.direction==2) HAL_GPIO_WritePin(GPIOB,GPIO_PIN_12,GPIO_PIN_SET);
 		if(Garbage_inlet_motor.Pulse <= Garbage_inlet_motor.Target_angle)
 		{
-			__HAL_TIM_SetCompare(&htim3, TIM_CHANNEL_4, 50);
+			vision_send_sign_1=1;
+			cnt26++;
+			__HAL_TIM_SetCompare(&htim3, TIM_CHANNEL_4, 25);
 		}
 		else
 		{
@@ -103,12 +107,12 @@ void UP_motor_move(void)
     {
 		Garbage_inlet_motor.direction=2;
 		Garbage_inlet_motor.Pulse++;
-		Garbage_inlet_motor.Target_angle=600;
+		Garbage_inlet_motor.Target_angle=300;
 		if(Garbage_inlet_motor.direction==1) HAL_GPIO_WritePin(GPIOB,GPIO_PIN_12,GPIO_PIN_RESET);
 		if(Garbage_inlet_motor.direction==2) HAL_GPIO_WritePin(GPIOB,GPIO_PIN_12,GPIO_PIN_SET);
 		if(Garbage_inlet_motor.Pulse <= Garbage_inlet_motor.Target_angle)
 		{
-			__HAL_TIM_SetCompare(&htim3, TIM_CHANNEL_4, 50);
+			__HAL_TIM_SetCompare(&htim3, TIM_CHANNEL_4, 25);
 		}
 		else
 		{
@@ -118,6 +122,8 @@ void UP_motor_move(void)
 			Garbage_inlet_motor.Pulse=0;
 			up_motor_move_flag=0;
 			up_motor_sign_2=0;
+			vision_send_sign_1=2;
+			cnt262++;
 		}
 	}
 }
