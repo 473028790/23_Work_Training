@@ -1,0 +1,28 @@
+*** Using Compiler 'V5.06 update 7 (build 960)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
+Build target 'stm32F446'
+compiling motor_control.c...
+..\User\Src\motor_control.c(139): warning:  #1-D: last line of file ends without a newline
+  }
+..\User\Src\motor_control.c(4): warning:  #177-D: variable "down_motor_act"  was declared but never referenced
+  static uint8_t down_motor_act=0,down_motor_target=0;
+..\User\Src\motor_control.c(4): warning:  #177-D: variable "down_motor_target"  was declared but never referenced
+  static uint8_t down_motor_act=0,down_motor_target=0;
+..\User\Src\motor_control.c: 3 warnings, 0 errors
+compiling screen.c...
+..\User\Src\screen.c(76): warning:  #1-D: last line of file ends without a newline
+  }
+..\User\Src\screen.c: 1 warning, 0 errors
+compiling vision.c...
+..\User\Src\vision.c(20): warning:  #186-D: pointless comparison of unsigned integer with zero
+          if (vision_garbage.Type >= 0 || vision_garbage.Type <= 3) {
+..\User\Src\vision.c(5): warning:  #177-D: variable "direction_opposite"  was declared but never referenced
+  static uint8_t direction_opposite=0;
+..\User\Src\vision.c: 2 warnings, 0 errors
+compiling usart.c...
+compiling main.c...
+compiling freertos.c...
+linking...
+Program Size: Code=14688 RO-data=672 RW-data=192 ZI-data=18560  
+FromELF: creating hex file...
+"stm32F446\stm32F446.axf" - 0 Error(s), 6 Warning(s).
+Build Time Elapsed:  00:00:03
