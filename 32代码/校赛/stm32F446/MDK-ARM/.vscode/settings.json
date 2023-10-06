@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "*.tcc": "c",
+        "cstdio": "c",
+        "usart.h": "c",
+        "screen.h": "c",
+        "motor_control.h": "c",
+        "stdint.h": "c",
+        "vision.h": "c",
+        "main.h": "c",
+        "overload.h": "c"
+    }
+}
